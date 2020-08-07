@@ -14,14 +14,17 @@ private:
 	std::vector<std::string> logd;
 public:
 	logg() {
-		logpath = ".\\log.txt";
-		this->logd.push_back("::LOGGING BEGIN::");
+		this->logpath = ".\\log.txt";
+		this->logd;
 	}
 	logg(const std::string& mess) {
-		logpath = ".\\log.txt";
+		this->logpath = ".\\log.txt";
 		this->logd.push_back(mess);
 	}
 	~logg() {}
-	void add_log_string(std::string& L);
+	void add_log_string(std::string L);
+	void add_log_string(char* L);
+	void add_log_string_timemark_(std::string L);
+	void add_log_string_timemark_(char* L);
 	void write_to_file();
 };
