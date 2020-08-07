@@ -46,3 +46,7 @@ void logg::add_log_string(char * L) {
 	out += "::";
 	this->logd.push_back(out);
 }
+
+std::string logg::get_log_path() {
+	return this->logpath;
+}
