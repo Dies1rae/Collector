@@ -27,4 +27,5 @@ public:
 	void add_log_string_timemark_(std::string L);
 	void add_log_string_timemark_(char* L);
 	void write_to_file();
+	std::string get_log_path();
 };
