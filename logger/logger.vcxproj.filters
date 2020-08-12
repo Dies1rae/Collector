@@ -29,10 +29,10 @@
     <ClInclude Include="logg.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="places.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="collector.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="places.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

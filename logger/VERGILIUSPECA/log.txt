@@ -1,9 +1,0 @@
-::INIT DONE::
-*LOGGING BEGIN::Sat Aug  8 02:05:04 2020
-
-::---MAIN INFO---::
-::VERGILIUSPECA::
-::ARCH NUM: 9 x64_(AMD or Intel)|CORES: 4::
-
-*LOGGING END::Sat Aug  8 02:05:04 2020
-
