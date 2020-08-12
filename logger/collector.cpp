@@ -93,13 +93,14 @@ void collector::create_root_folder() {
 void collector::move_collected_to_root() {
 	std::cout << "--COPY FILES TO DIR--" << std::endl;
 	for (auto& ptr : this->files_to_copy_in_root_) {
-		std::ifstream src_file(ptr, std::ios::binary);
+		//std::ifstream src_file(ptr, std::ios::binary);
 		std::string only_file_name = ptr.substr(ptr.find_last_of('\\'));
 		std::string dest_file_path = this->root_folder_ + only_file_name;
-		std::ofstream dest_file(dest_file_path, std::ios::binary);
-		dest_file << src_file.rdbuf();
-		src_file.close();
-		dest_file.close();
+		fs::copy_file(ptr, dest_file_path);
+		//std::ofstream dest_file(dest_file_path, std::ios::binary);
+		//dest_file << src_file.rdbuf();
+		//src_file.close();
+		//dest_file.close();
 	}
 	//this part is delete ./log.txt after copy in root folder
 	try {
@@ -170,5 +171,6 @@ void collector::collect_log_file(){
 	catch(fs::filesystem_error &err){
 		std::cerr << err.what() << std::endl;
 		this->main_log_container_->add_log_string(err.what());
+		system("PAUSE");
 	}
 }
