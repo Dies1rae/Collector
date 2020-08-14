@@ -50,3 +50,7 @@ void logg::add_log_string(char * L) {
 std::string logg::get_log_path() {
 	return this->logpath;
 }
+void logg::set_logpath(std::string lp) {
+	this->logpath.clear();
+	this->logpath = lp;
+}
