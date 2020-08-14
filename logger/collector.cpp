@@ -40,9 +40,9 @@ void collector::run() {
 	this->main_log_container_->add_log_string(get_pc_motherboard_info());
 	this->main_log_container_->add_log_string(get_pc_videodev_info());
 	get_pc_disk_space();
-	for (const auto& ptr : get_pc_network_info()) {
-		this->main_log_container_->add_log_string(ptr);
-	}
+	this->main_log_container_->add_log_string(get_pc_network_hard_info());
+	this->main_log_container_->add_log_string(get_pc_network_soft_info());
+
 
 	this->collect_log_file();
 	this->main_log_container_->add_log_string("");
@@ -193,9 +193,10 @@ std::string collector::get_pc_videodev_info() {
 	return video;
 }
 
-std::vector<std::string> collector::get_pc_network_info() {
-	std::vector<std::string>net_ada_info;
-	std::cout << "--NETWORK INFO--" << std::endl;
+std::string collector::get_pc_network_hard_info() {
+	std::string net_ada_info;
+	std::cout << "--NETWORK HARD INFO--" << std::endl;
+	
 	IP_ADAPTER_INFO* dad_info;
 	dad_info = (IP_ADAPTER_INFO*)malloc(sizeof(IP_ADAPTER_INFO));
 	ULONG ulOutBufLen;
@@ -209,12 +210,22 @@ std::vector<std::string> collector::get_pc_network_info() {
 		std::cerr << "GetAdaptersInfo call failed with "<< dwRetVal << std::endl;
 	}
 	PIP_ADAPTER_INFO pAdapter = dad_info;
-	while (pAdapter) {
-		net_ada_info.push_back(pAdapter->Description);
-		std::cout << pAdapter->Description << std::endl;
-		pAdapter = pAdapter->Next;
+	if (pAdapter) {
+		std::string tmp_net_descr = pAdapter->Description;
+		net_ada_info += tmp_net_descr;
+		net_ada_info += " | ";
+		net_ada_info += pAdapter->AdapterName;
+		std::wcout << pAdapter->Description << " | " << pAdapter->AdapterName << std::endl;
 	}
+	if (dad_info) {
+		free(dad_info);
+	}
+	return net_ada_info;
+}
 
+std::string collector::get_pc_network_soft_info() {
+	std::string net_ada_info;
+	std::cout << "--NETWORK SOFT INFO--" << std::endl;
 	FIXED_INFO* pFixedInfo;
 	ULONG ulOutBufLen_;
 	DWORD dwRetVa_;
@@ -231,17 +242,17 @@ std::vector<std::string> collector::get_pc_network_info() {
 			std::cerr << "Error allocating memory needed to call GetNetworkParams" << std::endl;
 		}
 	}
-	if (dwRetVa_ = GetNetworkParams(pFixedInfo, &ulOutBufLen) == NO_ERROR) {
-		std::string tmp_hn = pFixedInfo->HostName;
-		tmp_hn += ".";
-		tmp_hn += pFixedInfo->DomainName;
-		net_ada_info.push_back(tmp_hn);
-		std::string tmp_dns = pFixedInfo->DnsServerList.IpAddress.String;
-		tmp_dns += " | ";
-		pIPAddr = pFixedInfo->DnsServerList.Next;
-		tmp_dns += pIPAddr->IpAddress.String;
-		net_ada_info.push_back(tmp_dns);
-		std::cout << "HOSTNAME: " << tmp_hn << " | DNS: " << tmp_dns << " | " << std::endl;
+	if (dwRetVa_ = GetNetworkParams(pFixedInfo, &ulOutBufLen_) == NO_ERROR) {
+		std::cout << "HOSTNAME: " << pFixedInfo->HostName << '.' << pFixedInfo->DomainName << " | DNS: " << pFixedInfo->DnsServerList.IpAddress.String << " | " << std::endl;
+		std::string tmp_net_name_ = pFixedInfo->HostName;
+		tmp_net_name_ +=".";
+		tmp_net_name_ += pFixedInfo->DomainName;
+		tmp_net_name_ += " | ";
+		tmp_net_name_ += pFixedInfo->DnsServerList.IpAddress.String;
+		net_ada_info += tmp_net_name_;
+	}
+	if (pFixedInfo) {
+		free(pFixedInfo);
 	}
 	return net_ada_info;
 }

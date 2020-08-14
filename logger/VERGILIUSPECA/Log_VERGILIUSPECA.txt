@@ -1,0 +1,17 @@
+::INIT DONE::
+*LOGGING BEGIN::Sat Aug 15 00:24:58 2020
+
+::---HARDWARE INFO---::
+::VERGILIUSPECA::
+::Intel(R) Core(TM) i3-4160 CPU @ 3.60GHz::
+::Physical RAM: 16321 Mb::
+::Manufacture: ASUSTeK COMPUTER INC. | Model: H81M-D R2.0 |::
+::NVIDIA GeForce GTX 1050 Ti::
+::Disk C:\ | Capacity: 457760 Mb | Free: 270313 Mb | Available: 270313 Mb |::
+::Disk D:\ | Capacity: 476936 Mb | Free: 195158 Mb | Available: 195158 Mb |::
+::Disk F:\ | Capacity: 953667 Mb | Free: 464096 Mb | Available: 464096 Mb |::
+::Realtek PCIe GBE Family Controller | {6B8C10C8-E6A8-46E6-BF8C-8C1BB9B83E51}::
+:: | 192.168.1.1::
+
+*LOGGING END::Sat Aug 15 00:24:58 2020
+
