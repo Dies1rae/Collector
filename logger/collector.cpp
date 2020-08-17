@@ -97,17 +97,19 @@ std::string collector::get_pc_CPU_info() {
 
 void collector::create_root_folder_and_move_logs() {
 	/*!fs::is_directory(this->root_folder_) || !fs::exists(this->root_folder_)*/
-	int status_dir_ = mkdir(this->root_folder_.c_str());
-	
+	int status_dir_ = _mkdir(this->root_folder_.c_str());
 	this->move_collected_to_root();
 	std::remove(this->files_to_copy_in_root_[0].c_str());
 }
 
 void collector::move_collected_to_root() {
 	for (auto& ptr : this->files_to_copy_in_root_) {
-		std::string only_file_name = ptr.substr(ptr.find_last_of('\\'));
-		std::string dest_file_path = this->root_folder_ + only_file_name;
-		fs::copy_file(ptr, dest_file_path,fs::copy_options::overwrite_existing);
+		std::string dest_file_path = this->root_folder_ + ptr.substr(ptr.find_last_of('\\'));
+		std::ifstream src(ptr, std::ios::binary);
+		std::ofstream dst(dest_file_path, std::ios::binary);
+		dst << src.rdbuf();
+		src.close();
+		dst.close();
 	}
 }
 
