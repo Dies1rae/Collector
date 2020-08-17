@@ -9,10 +9,13 @@
 #include <sstream>
 #include <intrin.h>
 #include <vector>
-
+#include <sys/stat.h>
+#include <conio.h> 
+#include <sys/types.h> 
 #include <iphlpapi.h>
 #include <stdio.h>
-
+#include <stdlib.h> 
+#include <direct.h> 
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib,"user32.lib")
 namespace fs = std::filesystem;
@@ -93,11 +96,11 @@ std::string collector::get_pc_CPU_info() {
 }
 
 void collector::create_root_folder_and_move_logs() {
-	if (!fs::is_directory(this->root_folder_) || !fs::exists(this->root_folder_)) {
-		fs::create_directory(this->root_folder_);
-	}
+	/*!fs::is_directory(this->root_folder_) || !fs::exists(this->root_folder_)*/
+	int status_dir_ = mkdir(this->root_folder_.c_str());
+	
 	this->move_collected_to_root();
-	std::filesystem::remove(this->files_to_copy_in_root_[0]);
+	std::remove(this->files_to_copy_in_root_[0].c_str());
 }
 
 void collector::move_collected_to_root() {
@@ -106,7 +109,6 @@ void collector::move_collected_to_root() {
 		std::string dest_file_path = this->root_folder_ + only_file_name;
 		fs::copy_file(ptr, dest_file_path,fs::copy_options::overwrite_existing);
 	}
-	
 }
 
 void collector::get_pc_disk_space() {
