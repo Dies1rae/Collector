@@ -16,33 +16,27 @@ void man_menu_view() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	cout << endl << "***|";
 	SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_GREEN | 5);
-	cout << "Poltavskiy Nick img conv";
+	cout << "Poltavskiy Nick log collector";
 	SetConsoleTextAttribute(hConsole, 7);
 	cout << endl << "***|";
 	SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_GREEN | 5);
 	cout << "Help menu";
 	SetConsoleTextAttribute(hConsole, 7);
 	SetConsoleTextAttribute(hConsole, 8);
-	cout << endl << "***|" << "Poltavskiy Nick img conv(1)";
+	cout << endl << "***|" << "Poltavskiy Nick logger(1)";
 	SetConsoleTextAttribute(hConsole, 7);
 	SetConsoleTextAttribute(hConsole, 8);
 	cout << endl << "***|" << "SYNOPSIS:";
 	SetConsoleTextAttribute(hConsole, 7);
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe ";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe [OPTION] ... [DATA]";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe [OPTION] ... [DATA] ... [DATA]";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe [OPTION] ... [DATA] ... [DATA] ... [DATA]";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe [OPTION] ... [DATA] ... [DATA] ... [DATA] ... [DATA]";
+	cout << endl << "***|" << "		logger.exe ";
+	cout << endl << "***|" << "		logger.exe [OPTION]";
 	SetConsoleTextAttribute(hConsole, 8);
 	cout << endl << "***|" << "DESCRIPTION:";
 	SetConsoleTextAttribute(hConsole, 7);
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe start server by default on .\\in .\\out *.jpg";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe /s(service start) ... %FOLDER IN%";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe /s(service start) ... %FOLDER IN% ... %FOLDER OUT%";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe /s(service start) ... %FOLDER IN% ... %FOLDER OUT% ... %FILE TYPE%";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe /?(help menu)";
-	cout << endl << "***|" << "		ASCIIgoBRRRRR.exe /man(man menu)";
-	cout << endl << "***|" << "		You may find logs on .\\log.txt file";
+	cout << endl << "***|" << "		logger.exe default takes only local workstation info and formed folder with %pc_name%.txt log file";
+	cout << endl << "***|" << "		logger.exe /a besides local info, copy system log from winevnt dir(NEED ADMIN RIGTH)";
+	cout << endl << "***|" << "		logger.exe /?(help menu)";
+	cout << endl << "***|" << "		logger.exe /man(man menu)";
 	SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_GREEN | 9);
 	cout << endl << "...by Dies_Irae" << endl;
 	cout << endl;
@@ -56,20 +50,16 @@ void man_menu_view() {
 }
 
 void help_menu_view() {
-	cout << "	Usage: ASCIIgoBRRRRR.exe /s" << endl << endl;
+	cout << "	Usage: logger.exe" << endl << endl;
 	cout << "	OPTIONS: " << endl;
-	cout << "		s - Start server" << endl;
+	cout << "		a - key to copy all sys log" << endl;
 	cout << "		m - man menu" << endl;
-	cout << "		You may find logs on .\\log.txt file" << endl;
 	cout << "		? - help menu" << endl << endl;
 	cout << "	EXAMPLES: " << endl;
-	cout << "		ASCIIgoBRRRRR.exe" << endl;
-	cout << "		ASCIIgoBRRRRR.exe /s" << endl;
-	cout << "		ASCIIgoBRRRRR.exe /s c:\\Users\\Pidor\\in" << endl;
-	cout << "		ASCIIgoBRRRRR.exe /s c:\\Users\\Pidor\\in c:\\Users\\Pidor\\out" << endl;
-	cout << "		ASCIIgoBRRRRR.exe /s c:\\Users\\Pidor\\in c:\\Users\\Pidor\\out bmp" << endl << endl;
-	cout << "		ASCIIgoBRRRRR.exe /h" << endl;
-	cout << "		ASCIIgoBRRRRR.exe /?" << endl;
+	cout << "		logger.exe" << endl;
+	cout << "		logger.exe /a" << endl;
+	cout << "		logger.exe /h" << endl;
+	cout << "		logger.exe /?" << endl;
 }
 
 void hidecursor() {
