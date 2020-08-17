@@ -54,7 +54,6 @@ void collector::run() {
 	this->create_root_folder_and_move_logs();
 }
 std::string collector::get_pc_name() {
-	std::cout << "--PC NAME--" << std::endl;
 	TCHAR computerName[MAX_COMPUTERNAME_LENGTH + 1];
 	DWORD size = sizeof(computerName) / sizeof(computerName[0]);
 	GetComputerName(computerName, &size);
@@ -63,7 +62,7 @@ std::string collector::get_pc_name() {
 	for (const char C : restricted) {
 		std::replace(CompN.begin(), CompN.end(), C, '_');
 	}
-	std::cout << CompN << std::endl;
+
 	return CompN;
 }
 
@@ -90,23 +89,18 @@ std::string collector::get_pc_CPU_info() {
 		}
 	}
 	std::string cpu_info = CPUBrandString;
-	std::cout << "--PROC INFO--" << std::endl;
-	std::cout << cpu_info << std::endl;
 	return cpu_info;
 }
 
 void collector::create_root_folder_and_move_logs() {
-	std::cout << "--CREATE DIR--" << std::endl;
 	if (!fs::is_directory(this->root_folder_) || !fs::exists(this->root_folder_)) {
 		fs::create_directory(this->root_folder_);
-		std::cout << "--CREATED::" << this->root_folder_ << std::endl;
 	}
 	this->move_collected_to_root();
 	std::filesystem::remove(this->files_to_copy_in_root_[0]);
 }
 
 void collector::move_collected_to_root() {
-	std::cout << "--COPY FILES TO DIR--" << std::endl;
 	for (auto& ptr : this->files_to_copy_in_root_) {
 		std::string only_file_name = ptr.substr(ptr.find_last_of('\\'));
 		std::string dest_file_path = this->root_folder_ + only_file_name;
@@ -116,7 +110,6 @@ void collector::move_collected_to_root() {
 }
 
 void collector::get_pc_disk_space() {
-	std::cout << "--DISK INFO--" << std::endl;
 	std::vector<std::string> disklist;
 	DWORD drives = GetLogicalDrives();
 	for (int i = 0; i < 26; i++){
@@ -134,23 +127,19 @@ void collector::get_pc_disk_space() {
 		fs::space_info currVol = fs::space(D);
 		std::string cv = "Disk " + D + " | " + "Capacity: " + std::to_string(currVol.capacity / 1024 / 1024) + " Mb | Free: " + std::to_string(currVol.free / 1024 / 1024) + " Mb | Available: " + std::to_string(currVol.available / 1024 / 1024) + " Mb |";
 		this->main_log_container_->add_log_string(cv);
-		std::cout << cv << std::endl;
 	}
 }
 
 std::string collector::get_pc_ram_info() {
-	std::cout << "--RAM INFO--" << std::endl;
 	MEMORYSTATUSEX memInfo;
 	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
 	GlobalMemoryStatusEx(&memInfo);
 	DWORDLONG totalPhysMem = memInfo.ullTotalPhys;
 	std::string total_ram = "Physical RAM: " + std::to_string(totalPhysMem / 1024 / 1024) + " Mb";
-	std::cout << "Physical RAM: " << totalPhysMem /1024/1024 << " MB" << std::endl;
 	return total_ram;
 }
 
 std::string collector::get_pc_motherboard_info() {
-	std::cout << "--MAINBOARD INFO--" << std::endl;
 	WCHAR manuf[512], ModProduct[512];
 	DWORD Buff1 = 1024, Buff2 = 1024;
 	RegGetValue(HKEY_LOCAL_MACHINE, L"HARDWARE\\DESCRIPTION\\System\\BIOS", L"BaseBoardManufacturer", RRF_RT_ANY, NULL, manuf, &Buff1);
@@ -159,20 +148,14 @@ std::string collector::get_pc_motherboard_info() {
 	std::wstring ModProd_tmp(ModProduct);
 	std::wstring all_tmp_w = L"Manufacture: " + manufact_tmp + L" | Model: " + ModProd_tmp + L" |";
 	std::string res_mainB(all_tmp_w.begin(), all_tmp_w.end());
-	std::cout << res_mainB << std::endl;
 	return res_mainB;
 }
 
 std::string collector::get_pc_videodev_info() {
-	std::cout << "--VIDEOCARD INFO--" << std::endl;
 	DISPLAY_DEVICE vid = { sizeof(vid), 0 };
 	for (int ptr = 0;;ptr++) {
-		BOOL find = EnumDisplayDevices(NULL,ptr, &vid, EDD_GET_DEVICE_INTERFACE_NAME);
+		BOOL find = EnumDisplayDevices(NULL, ptr, &vid, EDD_GET_DEVICE_INTERFACE_NAME);
 		if (!find) {
-			break;
-		}
-		else {
-			std::wcout << vid.DeviceString << std::endl;
 			break;
 		}
 	}
@@ -183,8 +166,6 @@ std::string collector::get_pc_videodev_info() {
 
 std::string collector::get_pc_network_hard_info() {
 	std::string net_ada_info;
-	std::cout << "--NETWORK HARD INFO--" << std::endl;
-	
 	IP_ADAPTER_INFO* dad_info;
 	dad_info = (IP_ADAPTER_INFO*)malloc(sizeof(IP_ADAPTER_INFO));
 	ULONG ulOutBufLen;
@@ -196,6 +177,7 @@ std::string collector::get_pc_network_hard_info() {
 	}
 	if ((dwRetVal = GetAdaptersInfo(dad_info, &ulOutBufLen)) != ERROR_SUCCESS) {
 		std::cerr << "GetAdaptersInfo call failed with "<< dwRetVal << std::endl;
+		system("PAUSE");
 	}
 	PIP_ADAPTER_INFO pAdapter = dad_info;
 	if (pAdapter) {
@@ -203,7 +185,6 @@ std::string collector::get_pc_network_hard_info() {
 		net_ada_info += tmp_net_descr;
 		net_ada_info += " | ";
 		net_ada_info += pAdapter->AdapterName;
-		std::wcout << pAdapter->Description << " | " << pAdapter->AdapterName << std::endl;
 	}
 	if (dad_info) {
 		free(dad_info);
@@ -213,7 +194,6 @@ std::string collector::get_pc_network_hard_info() {
 
 std::string collector::get_pc_network_soft_info() {
 	std::string net_ada_info;
-	std::cout << "--NETWORK SOFT INFO--" << std::endl;
 	FIXED_INFO* pFixedInfo;
 	ULONG ulOutBufLen_;
 	DWORD dwRetVa_;
@@ -221,6 +201,7 @@ std::string collector::get_pc_network_soft_info() {
 	pFixedInfo = (FIXED_INFO*)malloc(sizeof(FIXED_INFO));
 	if (pFixedInfo == NULL) {
 		std::cerr << "ERROR ALLOC MEMORY" << std::endl;
+		system("PAUSE");
 	}
 	ulOutBufLen_ = sizeof(FIXED_INFO);
 	if (GetNetworkParams(pFixedInfo, &ulOutBufLen_) == ERROR_BUFFER_OVERFLOW) {
@@ -228,15 +209,13 @@ std::string collector::get_pc_network_soft_info() {
 		pFixedInfo = (FIXED_INFO*)malloc(ulOutBufLen_);
 		if (pFixedInfo == NULL) {
 			std::cerr << "Error allocating memory needed to call GetNetworkParams" << std::endl;
+			system("PAUSE");
 		}
 	}
 	if (dwRetVa_ = GetNetworkParams(pFixedInfo, &ulOutBufLen_) == NO_ERROR) {
-		std::cout << "HOSTNAME: " << pFixedInfo->HostName << '.' << pFixedInfo->DomainName;
 		std::string tmp_net_name_ = pFixedInfo->HostName;
 		tmp_net_name_ +=".";
 		tmp_net_name_ += pFixedInfo->DomainName;
-		tmp_net_name_ += " | ";
-		tmp_net_name_ += pFixedInfo->DnsServerList.IpAddress.String;
 		net_ada_info += tmp_net_name_;
 	}
 	if (pFixedInfo) {
