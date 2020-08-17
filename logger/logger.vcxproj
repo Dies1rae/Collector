@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="collector.h" />
     <ClInclude Include="logg.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="places.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

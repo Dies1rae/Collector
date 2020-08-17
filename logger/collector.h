@@ -5,15 +5,16 @@
 
 class collector{
 private:
+	bool key_;
 	std::vector<std::string> files_to_copy_in_root_;
 	logg * main_log_container_;
 	std::string root_folder_;
 public:
 	//crate, init and main loop
-	collector():main_log_container_(NULL), root_folder_(".\\"){};
-	collector(logg* L):main_log_container_(L), root_folder_(".\\") {};
+	collector():main_log_container_(NULL), root_folder_(".\\"), key_(false){};
+	collector(logg* L):main_log_container_(L), root_folder_(".\\"), key_(false) {};
 	~collector() {};
-	void init(logg* L);
+	void init(logg* L, bool K);
 	void run();
 protected:
 	//all serv methods
@@ -26,7 +27,6 @@ protected:
 	std::string get_pc_network_hard_info();
 	std::string get_pc_network_soft_info();
 	void create_root_folder_and_move_logs();
-	void collect_log_file();
 	void move_collected_to_root();
+	void collect_log_file();
 };
-

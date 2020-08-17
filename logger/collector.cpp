@@ -17,10 +17,11 @@
 #pragma comment(lib,"user32.lib")
 namespace fs = std::filesystem;
 
-void collector::init(logg* L) {
+void collector::init(logg* L,bool K) {
 	this->main_log_container_ = L;
 	char ch[14] = "INIT DONE";
 	this->main_log_container_->add_log_string(ch);
+	this->key_ = K;
 }
 
 void collector::run() {
@@ -44,13 +45,14 @@ void collector::run() {
 	this->main_log_container_->add_log_string(get_pc_network_soft_info());
 
 
-	this->collect_log_file();
+	if (this->key_) {
+		this->collect_log_file();
+	}
 	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string_timemark_(che);
 	this->main_log_container_->write_to_file();
 	this->create_root_folder_and_move_logs();
 }
-
 std::string collector::get_pc_name() {
 	std::cout << "--PC NAME--" << std::endl;
 	TCHAR computerName[MAX_COMPUTERNAME_LENGTH + 1];
@@ -98,23 +100,9 @@ void collector::create_root_folder_and_move_logs() {
 	if (!fs::is_directory(this->root_folder_) || !fs::exists(this->root_folder_)) {
 		fs::create_directory(this->root_folder_);
 		std::cout << "--CREATED::" << this->root_folder_ << std::endl;
-		this->move_collected_to_root();
 	}
-	else {
-		std::string only_file_name = this->files_to_copy_in_root_[0];
-		std::string dest_file_path = this->root_folder_ + only_file_name;
-		std::ifstream src(only_file_name, std::ios::binary | std::ios::in);
-		std::ofstream dst(dest_file_path, std::ios::binary);
-		dst << src.rdbuf();
-		src.close();
-		dst.close();
-	}
-	try {
-		std::filesystem::remove(this->files_to_copy_in_root_[0]);
-	}
-	catch(fs::filesystem_error &err){
-		std::cerr << err.what() << std::endl;
-	}
+	this->move_collected_to_root();
+	std::filesystem::remove(this->files_to_copy_in_root_[0]);
 }
 
 void collector::move_collected_to_root() {
@@ -122,9 +110,9 @@ void collector::move_collected_to_root() {
 	for (auto& ptr : this->files_to_copy_in_root_) {
 		std::string only_file_name = ptr.substr(ptr.find_last_of('\\'));
 		std::string dest_file_path = this->root_folder_ + only_file_name;
-		fs::copy_file(ptr, dest_file_path);
+		fs::copy_file(ptr, dest_file_path,fs::copy_options::overwrite_existing);
 	}
-	std::filesystem::remove(this->files_to_copy_in_root_[0]);	
+	
 }
 
 void collector::get_pc_disk_space() {
@@ -243,7 +231,7 @@ std::string collector::get_pc_network_soft_info() {
 		}
 	}
 	if (dwRetVa_ = GetNetworkParams(pFixedInfo, &ulOutBufLen_) == NO_ERROR) {
-		std::cout << "HOSTNAME: " << pFixedInfo->HostName << '.' << pFixedInfo->DomainName << " | DNS: " << pFixedInfo->DnsServerList.IpAddress.String << " | " << std::endl;
+		std::cout << "HOSTNAME: " << pFixedInfo->HostName << '.' << pFixedInfo->DomainName;
 		std::string tmp_net_name_ = pFixedInfo->HostName;
 		tmp_net_name_ +=".";
 		tmp_net_name_ += pFixedInfo->DomainName;
