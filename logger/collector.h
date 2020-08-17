@@ -23,7 +23,8 @@ protected:
 	std::string get_pc_motherboard_info();
 	std::string get_pc_ram_info();
 	std::string get_pc_videodev_info();
-	std::vector<std::string> get_pc_network_info();
+	std::string get_pc_network_hard_info();
+	std::string get_pc_network_soft_info();
 	void create_root_folder_and_move_logs();
 	void collect_log_file();
 	void move_collected_to_root();
