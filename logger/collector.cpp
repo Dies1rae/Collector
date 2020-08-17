@@ -39,10 +39,10 @@ void collector::run() {
 	this->main_log_container_->add_log_string(get_pc_ram_info());
 	this->main_log_container_->add_log_string(get_pc_motherboard_info());
 	this->main_log_container_->add_log_string(get_pc_videodev_info());
-	get_pc_disk_space();
-	for (const auto& ptr : get_pc_network_info()) {
-		this->main_log_container_->add_log_string(ptr);
-	}
+	//get_pc_disk_space();
+	//for (const auto& ptr : get_pc_network_info()) {
+	//	this->main_log_container_->add_log_string(ptr);
+	//}
 
 	this->collect_log_file();
 	this->main_log_container_->add_log_string("");
@@ -209,12 +209,14 @@ std::vector<std::string> collector::get_pc_network_info() {
 		std::cerr << "GetAdaptersInfo call failed with "<< dwRetVal << std::endl;
 	}
 	PIP_ADAPTER_INFO pAdapter = dad_info;
-	while (pAdapter) {
-		net_ada_info.push_back(pAdapter->Description);
-		std::cout << pAdapter->Description << std::endl;
-		pAdapter = pAdapter->Next;
+	std::string tmp_ada = pAdapter->Description;
+	net_ada_info.push_back(tmp_ada);
+	std::cout << tmp_ada << std::endl;
+	//pAdapter = pAdapter->Next;
+	if (dad_info) {
+		free(dad_info);
 	}
-
+	//-------
 	FIXED_INFO* pFixedInfo;
 	ULONG ulOutBufLen_;
 	DWORD dwRetVa_;
@@ -242,6 +244,9 @@ std::vector<std::string> collector::get_pc_network_info() {
 		tmp_dns += pIPAddr->IpAddress.String;
 		net_ada_info.push_back(tmp_dns);
 		std::cout << "HOSTNAME: " << tmp_hn << " | DNS: " << tmp_dns << " | " << std::endl;
+	}
+	if (pFixedInfo) {
+		free(pFixedInfo);
 	}
 	return net_ada_info;
 }
