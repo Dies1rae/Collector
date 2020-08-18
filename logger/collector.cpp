@@ -15,9 +15,10 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <direct.h> 
+//#include <filesystem>
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib,"user32.lib")
-
+//namespace fs = std::filesystem;
 
 void collector::init(logg* L,bool K) {
 	this->main_log_container_ = L;
@@ -236,7 +237,8 @@ std::string collector::get_pc_network_soft_info() {
 }
 
 void collector::collect_log_file(){
-	/* need to rebuild it without c++ FILESYSTEM to stl14 format
+	// need to rebuild it without c++ FILESYSTEM to stl14 format
+	/*
 	for (const auto& ptrD : place) {
 		for (const auto& ptrM : mask) {
 			for (const auto& ptrF : fs::recursive_directory_iterator(ptrD)) {
