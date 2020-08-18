@@ -1,5 +1,5 @@
 ::INIT DONE::
-*LOGGING BEGIN::Tue Aug 18 15:04:36 2020
+*LOGGING BEGIN::Tue Aug 18 18:49:17 2020
 
 ::---HARDWARE INFO---::
 ::NIK-WIN10::
@@ -7,10 +7,10 @@
 ::Physical RAM: 16382 Mb::
 ::Manufacture: Intel Corporation | Model: 440BX Desktop Reference Platform |::
 
-::Disk C:\ | Capacity: 255352 Mb | Free: 77716 Mb | Available: 77716 Mb |::
-::Disk Z:\ | Capacity: 890744 Mb | Free: 531480 Mb | Available: 531480 Mb |::
+::Disk C:\ | Capacity: 255352 Mb | Free: 77472 Mb | Available: 77472 Mb |::
+::Disk Z:\ | Capacity: 890744 Mb | Free: 531183 Mb | Available: 531183 Mb |::
 ::Intel(R) 82574L Gigabit Network Connection | {23FB9BAA-E7E5-406D-A750-BF4636E9156D}::
 ::nik-win10.hq.spbtv.ru::
 
-*LOGGING END::Tue Aug 18 15:04:36 2020
+*LOGGING END::Tue Aug 18 18:49:18 2020
 
