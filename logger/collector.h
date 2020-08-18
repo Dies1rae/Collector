@@ -1,4 +1,5 @@
 #pragma once
+#define WIN32_LEAN_AND_MEAN
 #include "logg.h"
 #include <Windows.h>
 #include <winevt.h>
@@ -11,8 +12,8 @@ private:
 	std::string root_folder_;
 public:
 	//crate, init and main loop
-	collector():main_log_container_(NULL), root_folder_(".\\"), key_(false){};
-	collector(logg* L):main_log_container_(L), root_folder_(".\\"), key_(false) {};
+	collector() :main_log_container_(NULL), root_folder_(".\\"), key_(false) {};
+	collector(logg* L) :main_log_container_(L), root_folder_(".\\"), key_(false) {};
 	~collector() {};
 	void init(logg* L, bool K);
 	void run();

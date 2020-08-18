@@ -3,6 +3,7 @@
 #include "collector.h"
 #include "logg.h"
 #include "Menu.h"
+#define WIN32_LEAN_AND_MEAN
 
 int main(int argc, char* argv[]) {
 	//parse the arg and start main loop

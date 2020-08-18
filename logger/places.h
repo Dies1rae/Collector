@@ -1,4 +1,5 @@
 #pragma once
+#define WIN32_LEAN_AND_MEAN
 #include <vector>
 #include <string>
 //files to collect and places where collect
