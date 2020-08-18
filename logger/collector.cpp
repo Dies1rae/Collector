@@ -1,6 +1,5 @@
 #include "collector.h"
 #include "places.h"
-#include <filesystem>
 #include <string>
 #include <iostream>
 #include <WinBase.h>
@@ -18,7 +17,7 @@
 #include <direct.h> 
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib,"user32.lib")
-namespace fs = std::filesystem;
+
 
 void collector::init(logg* L,bool K) {
 	this->main_log_container_ = L;
@@ -63,7 +62,11 @@ std::string collector::get_pc_name() {
 	std::wstring tmp = computerName;
 	std::string CompN(tmp.begin(), tmp.end());
 	for (const char C : restricted) {
-		std::replace(CompN.begin(), CompN.end(), C, '_');
+		for (auto& ch : CompN) {
+			if (C == ch) {
+				ch = '_';
+			}
+		}
 	}
 
 	return CompN;
@@ -96,7 +99,6 @@ std::string collector::get_pc_CPU_info() {
 }
 
 void collector::create_root_folder_and_move_logs() {
-	/*!fs::is_directory(this->root_folder_) || !fs::exists(this->root_folder_)*/
 	int status_dir_ = _mkdir(this->root_folder_.c_str());
 	this->move_collected_to_root();
 	std::remove(this->files_to_copy_in_root_[0].c_str());
@@ -128,9 +130,15 @@ void collector::get_pc_disk_space() {
 	}
 
 	for (const std::string& D : disklist) {		
-		fs::space_info currVol = fs::space(D);
-		std::string cv = "Disk " + D + " | " + "Capacity: " + std::to_string(currVol.capacity / 1024 / 1024) + " Mb | Free: " + std::to_string(currVol.free / 1024 / 1024) + " Mb | Available: " + std::to_string(currVol.available / 1024 / 1024) + " Mb |";
-		this->main_log_container_->add_log_string(cv);
+		BOOL diskRes_;
+		unsigned __int64 i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
+		std::wstring d_temp_ = std::wstring(D.begin(), D.end());
+		LPCWSTR tmp_disk_letter = d_temp_.c_str();
+		diskRes_ = GetDiskFreeSpaceEx(tmp_disk_letter, (PULARGE_INTEGER)&i64FreeBytesToCaller, (PULARGE_INTEGER)&i64TotalBytes, (PULARGE_INTEGER)&i64FreeBytes);
+		if (diskRes_) {
+			std::string cv = "Disk " + D + " | " + "Capacity: " + std::to_string(i64TotalBytes / (1024 * 1024)) + " Mb | Free: " + std::to_string(i64FreeBytes / (1024 * 1024)) + " Mb | Available: " + std::to_string(i64FreeBytesToCaller / (1024 * 1024)) + " Mb |";
+			this->main_log_container_->add_log_string(cv);
+		}
 	}
 }
 
@@ -201,7 +209,6 @@ std::string collector::get_pc_network_soft_info() {
 	FIXED_INFO* pFixedInfo;
 	ULONG ulOutBufLen_;
 	DWORD dwRetVa_;
-	IP_ADDR_STRING* pIPAddr;
 	pFixedInfo = (FIXED_INFO*)malloc(sizeof(FIXED_INFO));
 	if (pFixedInfo == NULL) {
 		std::cerr << "ERROR ALLOC MEMORY" << std::endl;
@@ -216,7 +223,7 @@ std::string collector::get_pc_network_soft_info() {
 			system("PAUSE");
 		}
 	}
-	if (dwRetVa_ = GetNetworkParams(pFixedInfo, &ulOutBufLen_) == NO_ERROR) {
+	if (dwRetVa_= GetNetworkParams(pFixedInfo, &ulOutBufLen_) == NO_ERROR) {
 		std::string tmp_net_name_ = pFixedInfo->HostName;
 		tmp_net_name_ +=".";
 		tmp_net_name_ += pFixedInfo->DomainName;
@@ -229,22 +236,17 @@ std::string collector::get_pc_network_soft_info() {
 }
 
 void collector::collect_log_file(){
-	try {
-		for (const auto& ptrD : place) {
-			for (const auto& ptrM : mask) {
-				for (const auto& ptrF : fs::recursive_directory_iterator(ptrD)) {
-					std::string tmpF = ptrF.path().string();
-					if (tmpF.find(ptrM) != std::string::npos) {
-						this->files_to_copy_in_root_.push_back(tmpF);
-					}
-					tmpF.clear();
+	/* need to rebuild it without c++ FILESYSTEM to stl14 format
+	for (const auto& ptrD : place) {
+		for (const auto& ptrM : mask) {
+			for (const auto& ptrF : fs::recursive_directory_iterator(ptrD)) {
+				std::string tmpF = ptrF.path().string();
+				if (tmpF.find(ptrM) != std::string::npos) {
+					this->files_to_copy_in_root_.push_back(tmpF);
 				}
+				tmpF.clear();
 			}
 		}
 	}
-	catch(fs::filesystem_error &err){
-		std::cerr << err.what() << std::endl;
-		this->main_log_container_->add_log_string(err.what());
-		system("PAUSE");
-	}
+	*/
 }
