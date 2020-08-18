@@ -44,7 +44,9 @@ void collector::run() {
 	this->main_log_container_->add_log_string(get_pc_motherboard_info());
 	this->main_log_container_->add_log_string(get_pc_videodev_info());
 	get_pc_disk_space();
-	this->main_log_container_->add_log_string(get_pc_network_hard_info());
+	for (const auto& ptr : get_pc_network_hard_info()) {
+		this->main_log_container_->add_log_string(ptr);
+	}
 	this->main_log_container_->add_log_string(get_pc_network_soft_info());
 
 
@@ -177,8 +179,8 @@ std::string collector::get_pc_videodev_info() {
 	return video;
 }
 
-std::string collector::get_pc_network_hard_info() {
-	std::string net_ada_info;
+std::vector<std::string> collector::get_pc_network_hard_info() {
+	std::vector<std::string> net_ada_info;
 	IP_ADAPTER_INFO* dad_info;
 	dad_info = (IP_ADAPTER_INFO*)malloc(sizeof(IP_ADAPTER_INFO));
 	ULONG ulOutBufLen;
@@ -193,11 +195,13 @@ std::string collector::get_pc_network_hard_info() {
 		system("PAUSE");
 	}
 	PIP_ADAPTER_INFO pAdapter = dad_info;
-	if (pAdapter) {
+	while (pAdapter) {
 		std::string tmp_net_descr = pAdapter->Description;
-		net_ada_info += tmp_net_descr;
-		net_ada_info += " | ";
-		net_ada_info += pAdapter->AdapterName;
+		tmp_net_descr += " | ";
+		tmp_net_descr += pAdapter->AdapterName;
+		net_ada_info.push_back(tmp_net_descr);
+		tmp_net_descr.clear();
+		pAdapter = pAdapter->Next;
 	}
 	if (dad_info) {
 		free(dad_info);
@@ -234,6 +238,11 @@ std::string collector::get_pc_network_soft_info() {
 		free(pFixedInfo);
 	}
 	return net_ada_info;
+}
+
+std::vector<std::string> collector::get_installed_software() {
+	std::vector<std::string> res;
+	
 }
 
 void collector::collect_log_file(){
