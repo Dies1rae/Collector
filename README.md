@@ -1,6 +1,8 @@
 # Collector
 So hi everyone. Glad to see you here.
-This small programm for fast retrieve info from you workstation or server Windows OS to .//%your_PC_name%//%your_PC_name%.txt . Project been created to test skills, and try to realise some function from books.
+This small programm for fast retrieve info from you workstation or server Windows OS to .//%you_PC_name%//%you_PC_name%.txt
+
+Project been created to test skills, and try to realise some function from books.
 Main features of this programm is to get all info from PC fast, and without using WMI or cmd.
 USAGE:
 
