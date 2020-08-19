@@ -33,10 +33,11 @@ void collector::run() {
 	char che[18] = "LOGGING END";
 	char chb[20] = "LOGGING BEGIN";
 	this->main_log_container_->add_log_string_timemark_(chb);
+	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string("---***HARDWARE INFO***---");
 	std::string pc_name = get_pc_name();
 	//set property txt file name
-	this->main_log_container_->set_logpath(".\\Log_" + pc_name+".txt");
+	this->main_log_container_->set_logpath(".\\Log_" + pc_name + ".txt");
 	this->files_to_copy_in_root_.push_back(this->main_log_container_->get_log_path());
 	//-----
 	this->root_folder_ += pc_name+'\\';
@@ -53,7 +54,6 @@ void collector::run() {
 	this->main_log_container_->add_log_string(get_pc_network_soft_info());
 
 	this->main_log_container_->add_log_string("");
-	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string("---***SOFTWARE INFO***---");
 	for (const auto& ptr : get_installed_software()) {
 		this->main_log_container_->add_log_string(ptr);
@@ -63,10 +63,12 @@ void collector::run() {
 		this->collect_log_file();
 	}
 	this->main_log_container_->add_log_string("");
+	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string_timemark_(che);
 	this->main_log_container_->write_to_file();
 	this->create_root_folder_and_move_logs();
 }
+
 std::string collector::get_pc_name() {
 	TCHAR computerName[MAX_COMPUTERNAME_LENGTH + 1];
 	DWORD size = sizeof(computerName) / sizeof(computerName[0]);

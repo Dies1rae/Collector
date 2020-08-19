@@ -35,7 +35,7 @@ void man_menu_view() {
 	cout << endl << "***|" << "DESCRIPTION:";
 	SetConsoleTextAttribute(hConsole, 7);
 	cout << endl << "***|" << "		logger.exe default takes only local workstation info and formed folder with %pc_name%.txt log file";
-	cout << endl << "***|" << "		logger.exe /a besides local info, copy system log from winevnt dir(NEED ADMIN RIGTH)";
+	cout << endl << "***|" << "		logger.exe /a besides local info, copy system log from winevnt dir(NEED ADMIN RIGTH) - UUPSY this func. is not availible now";
 	cout << endl << "***|" << "		logger.exe /?(help menu)";
 	cout << endl << "***|" << "		logger.exe /man(man menu)";
 	SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_GREEN | 9);
@@ -53,12 +53,12 @@ void man_menu_view() {
 void help_menu_view() {
 	cout << "	Usage: logger.exe" << endl << endl;
 	cout << "	OPTIONS: " << endl;
-	cout << "		a - key to copy all sys log" << endl;
+	cout << "		a - key to copy all sys log - UUPSY this func. is not availible now" << endl;
 	cout << "		m - man menu" << endl;
 	cout << "		? - help menu" << endl << endl;
 	cout << "	EXAMPLES: " << endl;
 	cout << "		logger.exe" << endl;
-	cout << "		logger.exe /a" << endl;
+	cout << "		logger.exe /a - UUPSY this func. is not availible now" << endl;
 	cout << "		logger.exe /h" << endl;
 	cout << "		logger.exe /?" << endl;
 }
