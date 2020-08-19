@@ -1,16 +1,237 @@
 ::INIT DONE::
-*LOGGING BEGIN::Tue Aug 18 18:49:17 2020
+*LOGGING BEGIN::Wed Aug 19 11:49:53 2020
 
-::---HARDWARE INFO---::
+::---***HARDWARE INFO***---::
 ::NIK-WIN10::
 ::Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz::
 ::Physical RAM: 16382 Mb::
 ::Manufacture: Intel Corporation | Model: 440BX Desktop Reference Platform |::
-
-::Disk C:\ | Capacity: 255352 Mb | Free: 77472 Mb | Available: 77472 Mb |::
+::VMware SVGA 3D::
+::Disk C:\ | Capacity: 255352 Mb | Free: 77838 Mb | Available: 77838 Mb |::
 ::Disk Z:\ | Capacity: 890744 Mb | Free: 531183 Mb | Available: 531183 Mb |::
 ::Intel(R) 82574L Gigabit Network Connection | {23FB9BAA-E7E5-406D-A750-BF4636E9156D}::
 ::nik-win10.hq.spbtv.ru::
 
-*LOGGING END::Tue Aug 18 18:49:18 2020
+
+::---***SOFTWARE INFO***---::
+::Visual Studio Community 2019::
+::7-Zip 9.38 beta::
+::Arduino::
+::Google Chrome::
+::HK-Software IBExpert Personal Edition::
+::>=A>;L 04<8=8AB@8@>20=8O Kaspersky Security Center::
+::35=B 04<8=8AB@8@>20=8O Kaspersky Security Center 11::
+::K-Lite Mega Codec Pack 15.2.0::
+::Microsoft .NET Framework 1.1::
+::Microsoft Azure Storage Emulator - v5.10::
+::Notepad++::
+::Unity::
+::ClickOnce Bootstrapper Package for Microsoft .NET Framework::
+::Microsoft Workflow Debugger v1.0 for x86::
+::Universal CRT Redistributable::
+::Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.30501::
+::Microsoft System CLR Types 4;O SQL Server 2019 CTP2.2::
+::Microsoft .NET Core SDK - 2.1.202 (x64)::
+::icecap_collectionresourcesx64::
+::Windows Simulator - ENU::
+::Windows Software Development Kit - Windows 10.0.18362.1::
+::Microsoft .NET CoreRuntime SDK::
+::Microsoft ASP.NET Diagnostic Pack for Visual Studio::
+::Universal CRT Extension SDK::
+::Microsoft Visual C++ 2013 x86 Minimum Runtime - 12.0.21005::
+::Microsoft .NET Core Runtime - 3.1.7 (x86)::
+::TrueConf 7.5.2::
+::Windows Mobile Extension SDK Contracts::
+::Visual C++ Library CRT Appx Package::
+::Windows App Certification Kit x64::
+::Windows SDK Desktop Libs arm64::
+::;038= C?@02;5=8O Kaspersky Endpoint Security 4;O Windows (11.4.0)::
+::MySQL Connector J::
+:: Tools for .Net 3.5::
+::Microsoft .NET Framework 4.7.2 Targeting Pack::
+::vs_vswebprotocolselectormsi::
+::Microsoft ASP.NET Core 2.0.9 - Runtime Package Store::
+::Kaspersky Endpoint Security 4;O Windows::
+::Microsoft Visual C++ 2010  x86 Redistributable - 10.0.30319::
+::Microsoft .NET Framework 4.5.2 Multi-Targeting Pack::
+::;038= C?@02;5=8O ?@>3@0<<>9 =B828@CA 0A?5@A:>3> 8.0 MP1/MP2 4;O Linux File Server::
+::Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.30501::
+::Microsoft Visual C++ 2015-2019 Redistributable (x86) - 14.27.29016::
+::Universal CRT Extension SDK::
+::Windows SDK ARM Desktop Tools::
+::Windows SDK Modern Versioned Developer Tools::
+::Windows SDK for Windows Store Apps Libs::
+::Windows SDK Desktop Libs x86::
+::Microsoft Exchange Web Services Managed API 2.1::
+::WinRT Intellisense UAP - Other Languages::
+::sptools_Microsoft.VisualStudio.OfficeDeveloperTools.Msi::
+::vs_clickoncebootstrappermsires::
+::vs_minshellinteropmsi::
+::Microsoft ASP.NET Core 3.1.7 Shared Framework (x86)::
+::Kaspersky Security 10.1.2 Administration Plug-in::
+::Microsoft .NET Framework 4.6 Targeting Pack::
+::Windows SDK Desktop Tools arm64::
+::Windows Mobile Extension SDK::
+::vs_clickoncesigntoolmsi::
+::;038= C?@02;5=8O Kaspersky Endpoint Security 10 Service Pack 2 4;O Windows::
+::;038= C?@02;5=8O Kaspersky Endpoint Security 8 4;O Windows::
+::Microsoft .NET Core Host FX Resolver - 3.1.7 (x86)::
+::Windows SDK Redistributables::
+::HowToGuide::
+::WinRT Intellisense IoT - en-us::
+::MySQL Documents 8.0::
+::Windows SDK for Windows Store Apps::
+::Teams Machine-Wide Installer::
+::Windows Desktop Extension SDK Contracts::
+::vs_filehandler_x86::
+::Windows SDK::
+::Windows Phone SDK 8.0 Assemblies for Visual Studio 2019::
+::Visual C++ Library CRT Appx Package::
+::Windows IoT Extension SDK Contracts::
+::Visual C++ Library CRT Desktop Appx Package::
+::Windows SDK Desktop Headers arm::
+::Open XML SDK 2.5 for Microsoft Office::
+::Visual C++ Library CRT Appx Resource Package::
+::Microsoft Visual C++ 2015-2019 Redistributable (x64) - 14.27.29016::
+::Microsoft Azure Storage Emulator - v5.10::
+::Windows SDK Desktop Headers arm64::
+::vs_vswebprotocolselectormsires::
+::;038= C?@02;5=8O ?@>3@0<<>9 Kaspersky Endpoint Security 8 for Linux::
+::Microsoft .NET CoreRuntime For CoreCon::
+::Microsoft ASP.NET Web Tools Packages 16.0 - ENU::
+::MySQL Installer - Community::
+::Windows SDK Signing Tools::
+::Windows SDK DirectX x86 Remote::
+::Brother Scanner Driver::
+::Windows SDK Desktop Tools x86::
+::Windows SDK Desktop Libs x64::
+::sptools_Microsoft.VisualStudio.Vsto.Msi.Resources::
+::Microsoft .NET Framework 4.7.1 Targeting Pack::
+::Microsoft .NET Framework 4.5 Multi-Targeting Pack::
+::Windows App Certification Kit SupportedApiList x86::
+::Microsoft Visual C++ 2019 X86 Additional Runtime - 14.27.29016::
+::0:>?8B5;L=K9 ?0:5B >1=>2;5=8O Microsoft .NET Framework Intellisense 4;O Visual Studio ( CAA:89)::
+::>=A>;L 04<8=8AB@8@>20=8O Kaspersky Security Center::
+::Windows Team Extension SDK Contracts::
+::Windows SDK EULA::
+::Windows SDK for Windows Store Apps Metadata::
+::Google Update Helper::
+::Microsoft UniversalWindowsPlatform SDK::
+::Kits Configuration Installer::
+::Windows SDK for Windows Store Apps Headers::
+::WinRT Intellisense PPI - en-us::
+::SDK ARM Redistributables::
+::Microsoft .NET Framework 4.5.1 Multi-Targeting Pack::
+::Windows SDK Desktop Headers x64::
+::WinRT Intellisense IoT - Other Languages::
+::WinRT Intellisense UAP - en-us::
+::Windows Team Extension SDK::
+::Universal General MIDI DLS Extension SDK::
+::SDK ARM Additions::
+::Microsoft NetStandard SDK::
+::Universal CRT Headers Libraries and Sources::
+::vs_minshellmsi::
+:: Tools for .Net 3.5 - RUS Lang Pack::
+::Windows SDK Desktop Tools x64::
+::Microsoft Visual Studio 2019 Tools for Unity::
+::AppLogLibSetup::
+::IntelliTraceProfilerProxy::
+::WinRT Intellisense Desktop - Other Languages::
+::vs_filehandler_amd64::
+::Visual C++ Library CRT Desktop Appx Package::
+::vcpp_crt.redist.clickonce::
+::BrSupportTools::
+::Universal CRT Redistributable::
+::Windows SDK Desktop Headers x86::
+::vs_Graphics_Singletonx86::
+::Microsoft .NET Framework 4.6.1 Targeting Pack::
+::Universal CRT Headers Libraries and Sources::
+:: 0AH8@5=85 4;O Microsoft Exchange ActiveSync::
+::WinAppDeploy::
+::;038= Kaspersky Embedded Systems Security::
+::Windows SDK for Windows Store Apps DirectX x86 Remote::
+::windows_toolscorepkg::
+::Office 16 Click-to-Run Extensibility Component::
+::Office 16 Click-to-Run Localization Component::
+::AD Replication Status Tool 1.0::
+::WinRT Intellisense Mobile - en-us::
+::MySQL For Excel 1.3.8::
+::IDEAL Administration::
+::vs_SQLClickOnceBootstrappermsi::
+::MySQL Connector Net 8.0.17::
+::Microsoft .NET Framework 4.8 SDK::
+::Visual C++ Library CRT Desktop Appx Package::
+::Windows SDK Desktop Libs arm::
+::Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.17::
+::Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.6161::
+::WinRT Intellisense PPI - Other Languages::
+::vs_minshellmsires::
+::Windows IoT Extension SDK::
+::Microsoft Visual C++ 2019 X86 Debug Runtime - 14.27.29016::
+::Universal CRT Tools x86::
+::Microsoft Windows Desktop Runtime - 3.1.7 (x86)::
+:: 0AH8@5=85 4;O iOS Mobile Device Management::
+::Microsoft TestPlatform SDK Local Feed::
+::Windows SDK for Windows Store Apps Tools::
+::Windows SDK Facade Windows WinMD Versioned::
+::TypeScript SDK::
+::VS Immersive Activate Helper::
+::MSI to redistribute MS VS2005 CRT libraries::
+::Microsoft ASP.NET Web Tools Packages 16.0 - RUS::
+::vs_devenvmsi::
+::Python Launcher::
+::Citrix XenCenter::
+::Windows Desktop Extension SDK::
+::BrLogRx::
+::vs_BlendMsi::
+::Microsoft .NET Framework 4.7.1 Doc Redirected Targeting Pack (ENU) (@CAA:89)::
+::vs_clickoncebootstrappermsi::
+::Brother Port Driver::
+::Windows SDK for Windows Store Apps Contracts::
+::BrLauncher::
+::Microsoft .NET Framework 1.1::
+::Microsoft Visual Studio Setup Configuration::
+::vs_communitymsi::
+::;038= C?@02;5=8O Kaspersky Endpoint Security 10 Service Pack 1 4;O Windows::
+::Windows SDK for Windows Store Managed Apps Libs::
+::Microsoft .NET Framework 4 Multi-Targeting Pack::
+::Update for  (KB2504637)::
+::sptools_Microsoft.VisualStudio.Vsto.Msi.x64::
+::ScannerStatusMonitor::
+::MSI Development Tools::
+::icecap_collectionresources::
+::Visual C++ Library CRT ARM64 Appx Package::
+::Windows SDK Modern Non-Versioned Developer Tools::
+::;038= C?@02;5=8O Kaspersky Endpoint Security 10 Service Pack 1 Maintenance Release 2 4;O Windows::
+::vs_tipsmsi::
+::ControlCenter4::
+::Microsoft Visual C++ 2019 X86 Minimum Runtime - 14.27.29016::
+::vs_communitymsires::
+::;038= C?@02;5=8O Kaspersky Endpoint Security 8 4;O Mac::
+::MySQL Examples and Samples 8.0::
+::Microsoft Visual Studio Setup WMI Provider::
+::WinRT Intellisense Desktop - en-us::
+::Windows SDK AddOn::
+::Kaspersky Security 4;O 28@BC0;L=KE A@54 3.0 53:89 035=B Maintenance Release 2 - !5@25@ 70I8BK::
+::Windows Simulator::
+::RemoteSetup::
+::MSI to redistribute MS VS2005 CRT libraries::
+::35=B 04<8=8AB@8@>20=8O Kaspersky Security Center 11::
+::Visual C++ Library CRT ARM64 Appx Package::
+::icecap_collection_neutral::
+::Microsoft .NET Native SDK::
+::vs_FileTracker_Singleton::
+::0:5B SDK 4;O Microsoft .NET Framework 4.8 ( CAA:89)::
+::Windows XP Targeting with C++::
+::;038= Kaspersky Security 10::
+::Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.30501::
+::0:5B =0F5;820=8O Microsoft .NET Framework 4.7.2 ( CAA:89)::
+::sptools_Microsoft.VisualStudio.Vsto.Msi::
+::Microsoft Visual C++ 2013 x86 Additional Runtime - 12.0.21005::
+::;038= C?@02;5=8O Kaspersky Endpoint Security 10 Service Pack 2 Maintenance Release 1 4;O Mac::
+::Brother PJL Driver::
+::ControlCenter4 CSDK::
+::Microsoft Windows Communication Foundation Diagnostic Pack for x86::
+
+*LOGGING END::Wed Aug 19 11:49:54 2020
 

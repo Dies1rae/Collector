@@ -31,7 +31,7 @@ void collector::run() {
 	char che[18] = "LOGGING END";
 	char chb[20] = "LOGGING BEGIN";
 	this->main_log_container_->add_log_string_timemark_(chb);
-	this->main_log_container_->add_log_string("---HARDWARE INFO---");
+	this->main_log_container_->add_log_string("---***HARDWARE INFO***---");
 	std::string pc_name = get_pc_name();
 	//set property txt file name
 	this->main_log_container_->set_logpath(".\\Log_" + pc_name+".txt");
@@ -48,7 +48,13 @@ void collector::run() {
 		this->main_log_container_->add_log_string(ptr);
 	}
 	this->main_log_container_->add_log_string(get_pc_network_soft_info());
-	get_installed_software();
+	this->main_log_container_->add_log_string("");
+	this->main_log_container_->add_log_string("");
+	this->main_log_container_->add_log_string("---***SOFTWARE INFO***---");
+	for (const auto& ptr : get_installed_software()) {
+		this->main_log_container_->add_log_string(ptr);
+	}
+
 
 
 	if (this->key_) {
@@ -171,9 +177,10 @@ std::string collector::get_pc_videodev_info() {
 	DISPLAY_DEVICE vid = { sizeof(vid), 0 };
 	for (int ptr = 0;;ptr++) {
 		BOOL find = EnumDisplayDevices(NULL, ptr, &vid, EDD_GET_DEVICE_INTERFACE_NAME);
-		if (!find) {
+		if (find) {
 			break;
 		}
+		//and here we get trouble, if you dont have any VID card on workstation, you got problem with no for circle out....))) 
 	}
 	std::wstring video_tmp = vid.DeviceString;
 	std::string video(video_tmp.begin(), video_tmp.end());
@@ -248,7 +255,6 @@ std::vector<std::string> collector::get_installed_software() {
 	WCHAR sAppKeyName[1024];
 	WCHAR sSubKey[1024];
 	WCHAR sDisplayName[1024];
-	//WCHAR* sRoot = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
 	long lResult = ERROR_SUCCESS;
 	DWORD dwType = KEY_ALL_ACCESS;
 	DWORD dwBufferSize = 0;
@@ -275,12 +281,14 @@ std::vector<std::string> collector::get_installed_software() {
 			//Get the display name value from the application's sub key.
 			dwBufferSize = sizeof(sDisplayName);
 			if (RegQueryValueEx(hAppKey, L"DisplayName", NULL,&dwType, (unsigned char*)sDisplayName, &dwBufferSize) == ERROR_SUCCESS){
-				wprintf(L"%s\n", sDisplayName);
+				//wprintf(L"%s\n", sDisplayName);
+				std::wstring tmp_disp_name = sDisplayName;
+				std::string tmp_disp_name_input(tmp_disp_name.begin(), tmp_disp_name.end());
+				res.push_back(tmp_disp_name_input);
 			}
 			else {
 				//Display name value doe not exist, this application was probably uninstalled.
 			}
-
 			RegCloseKey(hAppKey);
 		}
 	}
