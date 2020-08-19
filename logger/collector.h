@@ -7,9 +7,9 @@
 class collector{
 private:
 	bool key_;
-	std::vector<std::string> files_to_copy_in_root_;
 	logg * main_log_container_;
 	std::string root_folder_;
+	std::vector<std::string> files_to_copy_in_root_;
 public:
 	//crate, init and main loop
 	collector() :main_log_container_(NULL), root_folder_(".\\"), key_(false) {};
@@ -17,7 +17,7 @@ public:
 	~collector() {};
 	void init(logg* L, bool K);
 	void run();
-protected:
+private:
 	//all serv methods
 	std::string get_pc_name();
 	std::string get_pc_CPU_info();

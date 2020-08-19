@@ -78,7 +78,6 @@ std::string collector::get_pc_name() {
 			}
 		}
 	}
-
 	return CompN;
 }
 
@@ -88,17 +87,14 @@ std::string collector::get_pc_CPU_info() {
 	unsigned int nExIds = CPUInfo[0];
 	// Get the information associated with each extended ID.
 	char CPUBrandString[0x40] = { 0 };
-	
 	for (unsigned int ptr = 0x80000000; ptr <= nExIds; ++ptr)	{
 		__cpuid(CPUInfo, ptr);
-
 		// Interpret CPU brand string and cache information.
 		if (ptr == 0x80000002){
 			memcpy(CPUBrandString, CPUInfo, sizeof(CPUInfo));
 		}
 		if (ptr == 0x80000003){
-			memcpy(CPUBrandString + 16,CPUInfo,sizeof(CPUInfo));
-			
+			memcpy(CPUBrandString + 16,CPUInfo,sizeof(CPUInfo));	
 		}
 		if (ptr == 0x80000004){
 			memcpy(CPUBrandString + 32, CPUInfo, sizeof(CPUInfo));
@@ -261,7 +257,7 @@ std::vector<std::string> collector::get_installed_software() {
 
 	//Open the "Uninstall" key.
 	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\", 0, KEY_READ, &hUninstKey) != ERROR_SUCCESS){
-		std::cerr << "POSHEL NAHUY" << std::endl;
+		std::cerr << "OOPSY" << std::endl;
 		system("PAUSE");
 	}
 
@@ -274,7 +270,7 @@ std::vector<std::string> collector::get_installed_software() {
 			if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, sSubKey, 0, KEY_READ, &hAppKey) != ERROR_SUCCESS){
 				RegCloseKey(hAppKey);
 				RegCloseKey(hUninstKey);
-				std::cerr << "POSHEL NAHUY" << std::endl;
+				std::cerr << "OOPSY" << std::endl;
 				system("PAUSE");
 			}
 
