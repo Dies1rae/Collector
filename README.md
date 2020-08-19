@@ -4,7 +4,7 @@ This small programm for fast get info from you workstation or server Windows OS.
 Main features of this programm is to get all info from PC fast, and without using WMI or cmd.
 USAGE:
 
-Poltavskiy Nick log collector(logger)
+Poltavskiy Nick(aka. Dies_Irae) log collector(logger)
 
 logger(1)
 
@@ -22,4 +22,3 @@ DESCRIPTION:
 	
 	logger.exe /man(man menu)
 	
-	...by Dies_Irae
