@@ -3,7 +3,7 @@ So hi everyone. Glad to see you here.
 This small programm for fast get info from you workstation or server Windows OS. Project been created to test skills, and try to realise some function from books.
 Main features of this programm is to get all info from PC fast, and without using WMI or cmd.
 
-"Poltavskiy Nick log collector";
+"Poltavskiy Nick log collector" << endl;
 "Help menu";
 "logger(1)";
 "SYNOPSIS:";
