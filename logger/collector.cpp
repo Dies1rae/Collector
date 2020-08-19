@@ -15,9 +15,11 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <direct.h> 
+#include <WinSock2.h>
 //#include <filesystem>
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib,"user32.lib")
+#pragma comment(lib, "ws2_32.lib")
 //namespace fs = std::filesystem;
 
 void collector::init(logg* L,bool K) {
@@ -45,17 +47,17 @@ void collector::run() {
 	this->main_log_container_->add_log_string(get_pc_videodev_info());
 	get_pc_disk_space();
 	for (const auto& ptr : get_pc_network_hard_info()) {
-		this->main_log_container_->add_log_string(ptr);
+		this->main_log_container_->add_log_string(ptr.first + "||" + ptr.second);
 	}
+	this->main_log_container_->add_log_string(get_pc_network_soft_addr_info());
 	this->main_log_container_->add_log_string(get_pc_network_soft_info());
+
 	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string("---***SOFTWARE INFO***---");
 	for (const auto& ptr : get_installed_software()) {
 		this->main_log_container_->add_log_string(ptr);
 	}
-
-
 
 	if (this->key_) {
 		this->collect_log_file();
@@ -183,8 +185,8 @@ std::string collector::get_pc_videodev_info() {
 	return video;
 }
 
-std::vector<std::string> collector::get_pc_network_hard_info() {
-	std::vector<std::string> net_ada_info;
+std::vector<std::pair<std::string, std::string>> collector::get_pc_network_hard_info() {
+	std::vector<std::pair<std::string, std::string>> net_ada_info;
 	IP_ADAPTER_INFO* dad_info;
 	dad_info = (IP_ADAPTER_INFO*)malloc(sizeof(IP_ADAPTER_INFO));
 	ULONG ulOutBufLen;
@@ -200,10 +202,23 @@ std::vector<std::string> collector::get_pc_network_hard_info() {
 	}
 	PIP_ADAPTER_INFO pAdapter = dad_info;
 	while (pAdapter) {
+		//get MAC part
+		std::stringstream stream_mac;
+		for (int i = 0; i < pAdapter->AddressLength; i++) {
+			if (i == (pAdapter->AddressLength - 1)) {
+				stream_mac << std::hex << (int)pAdapter->Address[i];
+			}
+			else {
+				stream_mac << std::hex << (int)pAdapter->Address[i];
+				stream_mac << '-';
+			}
+		}
+		std::string tmp_mac(stream_mac.str());
+		//-----------
 		std::string tmp_net_descr = pAdapter->Description;
 		tmp_net_descr += " | ";
 		tmp_net_descr += pAdapter->AdapterName;
-		net_ada_info.push_back(tmp_net_descr);
+		net_ada_info.push_back(std::make_pair(tmp_net_descr, tmp_mac));
 		tmp_net_descr.clear();
 		pAdapter = pAdapter->Next;
 	}
@@ -233,6 +248,7 @@ std::string collector::get_pc_network_soft_info() {
 		}
 	}
 	if (dwRetVa_= GetNetworkParams(pFixedInfo, &ulOutBufLen_) == NO_ERROR) {
+		std::wcout << pFixedInfo->CurrentDnsServer << std::endl;
 		std::string tmp_net_name_ = pFixedInfo->HostName;
 		tmp_net_name_ +=".";
 		tmp_net_name_ += pFixedInfo->DomainName;
@@ -242,6 +258,25 @@ std::string collector::get_pc_network_soft_info() {
 		free(pFixedInfo);
 	}
 	return net_ada_info;
+}
+
+std::string collector::get_pc_network_soft_addr_info() {
+	std::string addr_info;
+	WSADATA Data;
+	int wsa_ret = WSAStartup(0x101, &Data);
+	struct hostent* loc = gethostbyname(get_pc_network_soft_info().c_str());
+	if (loc == NULL) {
+		std::cerr << "Gethostbyname() failed" << std::endl;
+		system("PAUSE");
+	}
+	else {
+		unsigned int ptr = 0;
+		while (loc->h_addr_list[ptr] != NULL) {
+			addr_info += inet_ntoa(*(struct in_addr*)(loc->h_addr_list[ptr]));
+			ptr++;
+		}
+	}
+	return addr_info;
 }
 
 std::vector<std::string> collector::get_installed_software() {

@@ -1,5 +1,5 @@
 ::INIT DONE::
-*LOGGING BEGIN::Wed Aug 19 11:49:53 2020
+*LOGGING BEGIN::Wed Aug 19 14:37:18 2020
 
 ::---***HARDWARE INFO***---::
 ::NIK-WIN10::
@@ -7,9 +7,9 @@
 ::Physical RAM: 16382 Mb::
 ::Manufacture: Intel Corporation | Model: 440BX Desktop Reference Platform |::
 ::VMware SVGA 3D::
-::Disk C:\ | Capacity: 255352 Mb | Free: 77838 Mb | Available: 77838 Mb |::
+::Disk C:\ | Capacity: 255352 Mb | Free: 77857 Mb | Available: 77857 Mb |::
 ::Disk Z:\ | Capacity: 890744 Mb | Free: 531183 Mb | Available: 531183 Mb |::
-::Intel(R) 82574L Gigabit Network Connection | {23FB9BAA-E7E5-406D-A750-BF4636E9156D}::
+::Intel(R) 82574L Gigabit Network Connection | {23FB9BAA-E7E5-406D-A750-BF4636E9156D}||0-c-29-2c-12-ad::
 ::nik-win10.hq.spbtv.ru::
 
 
@@ -233,5 +233,5 @@
 ::ControlCenter4 CSDK::
 ::Microsoft Windows Communication Foundation Diagnostic Pack for x86::
 
-*LOGGING END::Wed Aug 19 11:49:54 2020
+*LOGGING END::Wed Aug 19 14:37:18 2020
 
