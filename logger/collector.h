@@ -28,6 +28,8 @@ private:
 	std::vector<std::pair<std::string, std::string>> get_pc_network_hard_info();
 	std::string get_pc_network_soft_info();
 	std::string get_pc_network_soft_addr_info();
+	std::string get_pc_user_();
+	std::string get_pc_user_list_();
 	void create_root_folder_and_move_logs();
 	void move_collected_to_root();
 	void collect_log_file();

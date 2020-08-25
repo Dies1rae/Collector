@@ -34,6 +34,7 @@ void collector::run() {
 	char chb[20] = "LOGGING BEGIN";
 	this->main_log_container_->add_log_string_timemark_(chb);
 	this->main_log_container_->add_log_string("");
+	this->main_log_container_->add_log_string("Started by: " + get_pc_user_());
 	this->main_log_container_->add_log_string("---***HARDWARE INFO***---");
 	std::string pc_name = get_pc_name();
 	//set property txt file name
@@ -52,6 +53,7 @@ void collector::run() {
 	}
 	this->main_log_container_->add_log_string(get_pc_network_soft_addr_info());
 	this->main_log_container_->add_log_string(get_pc_network_soft_info());
+	
 
 	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string("---***SOFTWARE INFO***---");
@@ -326,6 +328,19 @@ std::vector<std::string> collector::get_installed_software() {
 		}
 	}
 	RegCloseKey(hUninstKey);
+	return res;
+}
+
+std::string collector::get_pc_user_() {
+	TCHAR buff_[32767];
+	DWORD buffer_ch_ctr_ = 32767;
+	if (!GetUserName(buff_, &buffer_ch_ctr_)) {
+		std::cerr << "Get_username error" << std::endl;
+		std::string res = "Get_username error";
+		return res;
+	}
+	std::wstring tmp_ = buff_;
+	std::string res(tmp_.begin(), tmp_.end());
 	return res;
 }
 
