@@ -16,6 +16,7 @@
 #include <stdlib.h> 
 #include <direct.h> 
 #include <WinSock2.h>
+
 //#include <filesystem>
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib,"user32.lib")
@@ -342,6 +343,11 @@ std::string collector::get_pc_user_() {
 	std::wstring tmp_ = buff_;
 	std::string res(tmp_.begin(), tmp_.end());
 	return res;
+}
+std::string collector::get_pc_user_list_() {
+	
+	
+
 }
 
 void collector::collect_log_file(){
