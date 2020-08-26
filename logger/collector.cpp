@@ -16,11 +16,13 @@
 #include <stdlib.h> 
 #include <direct.h> 
 #include <WinSock2.h>
+#include <lm.h>
 
 //#include <filesystem>
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib,"user32.lib")
 #pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "netapi32.lib")
 //namespace fs = std::filesystem;
 
 void collector::init(logg* L,bool K) {
@@ -54,7 +56,11 @@ void collector::run() {
 	}
 	this->main_log_container_->add_log_string(get_pc_network_soft_addr_info());
 	this->main_log_container_->add_log_string(get_pc_network_soft_info());
-	
+	this->main_log_container_->add_log_string("");
+	this->main_log_container_->add_log_string("---***Users %homepaths%***---");
+	for (const auto& ptr : get_pc_user_list_()) {
+		this->main_log_container_->add_log_string(ptr);
+	}
 
 	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string("---***SOFTWARE INFO***---");
@@ -203,7 +209,6 @@ std::vector<std::pair<std::string, std::string>> collector::get_pc_network_hard_
 	}
 	if ((dwRetVal = GetAdaptersInfo(dad_info, &ulOutBufLen)) != ERROR_SUCCESS) {
 		std::cerr << "GetAdaptersInfo call failed with "<< dwRetVal << std::endl;
-		system("PAUSE");
 	}
 	PIP_ADAPTER_INFO pAdapter = dad_info;
 	while (pAdapter) {
@@ -241,7 +246,7 @@ std::string collector::get_pc_network_soft_info() {
 	pFixedInfo = (FIXED_INFO*)malloc(sizeof(FIXED_INFO));
 	if (pFixedInfo == NULL) {
 		std::cerr << "ERROR ALLOC MEMORY" << std::endl;
-		system("PAUSE");
+		net_ada_info += "|ERROR ALLOC MEMORY|";
 	}
 	ulOutBufLen_ = sizeof(FIXED_INFO);
 	if (GetNetworkParams(pFixedInfo, &ulOutBufLen_) == ERROR_BUFFER_OVERFLOW) {
@@ -249,11 +254,10 @@ std::string collector::get_pc_network_soft_info() {
 		pFixedInfo = (FIXED_INFO*)malloc(ulOutBufLen_);
 		if (pFixedInfo == NULL) {
 			std::cerr << "Error allocating memory needed to call GetNetworkParams" << std::endl;
-			system("PAUSE");
+			net_ada_info += "|Error allocating memory needed to call GetNetworkParams|";
 		}
 	}
 	if (dwRetVa_= GetNetworkParams(pFixedInfo, &ulOutBufLen_) == NO_ERROR) {
-		std::wcout << pFixedInfo->CurrentDnsServer << std::endl;
 		std::string tmp_net_name_ = pFixedInfo->HostName;
 		tmp_net_name_ +=".";
 		tmp_net_name_ += pFixedInfo->DomainName;
@@ -272,7 +276,7 @@ std::string collector::get_pc_network_soft_addr_info() {
 	struct hostent* loc = gethostbyname(get_pc_network_soft_info().c_str());
 	if (loc == NULL) {
 		std::cerr << "Gethostbyname() failed" << std::endl;
-		system("PAUSE");
+		addr_info += "|Gethostbyname() failed|";
 	}
 	else {
 		unsigned int ptr = 0;
@@ -298,7 +302,7 @@ std::vector<std::string> collector::get_installed_software() {
 	//Open the "Uninstall" key.
 	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\", 0, KEY_READ, &hUninstKey) != ERROR_SUCCESS){
 		std::cerr << "OOPSY" << std::endl;
-		system("PAUSE");
+		res.push_back("OOPSY");
 	}
 
 	for (DWORD dwIndex = 0; lResult == ERROR_SUCCESS; dwIndex++){
@@ -311,7 +315,7 @@ std::vector<std::string> collector::get_installed_software() {
 				RegCloseKey(hAppKey);
 				RegCloseKey(hUninstKey);
 				std::cerr << "OOPSY" << std::endl;
-				system("PAUSE");
+				res.push_back("OOPSY");
 			}
 
 			//Get the display name value from the application's sub key.
@@ -344,10 +348,54 @@ std::string collector::get_pc_user_() {
 	std::string res(tmp_.begin(), tmp_.end());
 	return res;
 }
-std::string collector::get_pc_user_list_() {
-	
-	
+std::vector<std::string> collector::get_pc_user_list_() {
+	std::vector<std::string> res;
 
+	HKEY hUserKey = NULL;
+	HKEY hSubUserKey = NULL;
+	WCHAR sUserKeyName[1024];
+	WCHAR sSubKey[1024];
+	WCHAR sDisplayName[1024];
+	long lResult = ERROR_SUCCESS;
+	DWORD dwType = KEY_ALL_ACCESS;
+	DWORD dwBufferSize = 0;
+
+	//Open the "Uninstall" key.
+	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList\\", 0, KEY_READ, &hUserKey) != ERROR_SUCCESS) {
+		std::cerr << "OOPSY" << std::endl;
+		res.push_back("OOPSY");
+	}
+
+	for (DWORD dwIndex = 0; lResult == ERROR_SUCCESS; dwIndex++) {
+		//Enumerate all sub keys...
+		dwBufferSize = sizeof(sUserKeyName);
+		if ((lResult = RegEnumKeyEx(hUserKey, dwIndex, sUserKeyName, &dwBufferSize, NULL, NULL, NULL, NULL)) == ERROR_SUCCESS) {
+			//Open the sub key.
+			wsprintf(sSubKey, L"%s\\%s", L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList\\", sUserKeyName);
+			if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, sSubKey, 0, KEY_READ, &hSubUserKey) != ERROR_SUCCESS) {
+				RegCloseKey(hSubUserKey);
+				RegCloseKey(hUserKey);
+				std::cerr << "OOPSY" << std::endl;
+				res.push_back("OOPSY");
+			}
+
+			//Get the display name value from the application's sub key.
+			dwBufferSize = sizeof(sDisplayName);
+			if (RegQueryValueEx(hSubUserKey, L"ProfileImagePath", NULL, &dwType, (unsigned char*)sDisplayName, &dwBufferSize) == ERROR_SUCCESS) {
+				//wprintf(L"%s\n", sDisplayName);
+				std::wstring tmp_disp_name = sDisplayName;
+				std::string tmp_disp_name_input(tmp_disp_name.begin(), tmp_disp_name.end());
+				res.push_back(tmp_disp_name_input);
+			}
+			else {
+				//Display name value doe not exist, this application was probably uninstalled.
+			}
+			RegCloseKey(hSubUserKey);
+		}
+	}
+	RegCloseKey(hUserKey);
+
+	return res;
 }
 
 void collector::collect_log_file(){
