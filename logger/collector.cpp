@@ -46,6 +46,7 @@ void collector::run() {
 	//-----
 	this->root_folder_ += pc_name+'\\';
 	this->main_log_container_->add_log_string(pc_name);
+	this->main_log_container_->add_log_string(get_OS_win_ver_());
 	this->main_log_container_->add_log_string(get_pc_CPU_info());
 	this->main_log_container_->add_log_string(get_pc_ram_info());
 	this->main_log_container_->add_log_string(get_pc_motherboard_info());
@@ -92,6 +93,24 @@ std::string collector::get_pc_name() {
 		}
 	}
 	return CompN;
+}
+std::string collector::get_OS_win_ver_() {
+	DWORD Buff_Prod_name_ = 1024, Buff_rel = 1024;
+	WCHAR Prod_name_[512], Rel_[512];
+	RegGetValue(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", L"ReleaseId", RRF_RT_ANY, NULL, Rel_, &Buff_rel);
+	RegGetValue(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", L"ProductName", RRF_RT_ANY, NULL, Prod_name_, &Buff_Prod_name_);
+	std::wstring Prod_name_tmp(Prod_name_);
+	std::wstring Rel_tmp(Rel_);
+	std::wstring all_tmp_w = L"Windows version: " + Prod_name_tmp + L" | Rel: " + Rel_tmp + L" | ";
+	std::string OS_WIN_VER(all_tmp_w.begin(), all_tmp_w.end());
+	UINT x64test = GetSystemWow64DirectoryA(NULL, 0);
+	if (GetLastError() == ERROR_CALL_NOT_IMPLEMENTED) {
+		OS_WIN_VER += "Type: x32 |";
+	}
+	else {
+		OS_WIN_VER += "Type: x64 |";
+	}
+	return OS_WIN_VER;
 }
 
 std::string collector::get_pc_CPU_info() {

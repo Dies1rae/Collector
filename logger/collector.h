@@ -29,6 +29,7 @@ private:
 	std::string get_pc_network_soft_info();
 	std::string get_pc_network_soft_addr_info();
 	std::string get_pc_user_();
+	std::string get_OS_win_ver_();
 	std::vector<std::string>  get_pc_user_list_();
 	void create_root_folder_and_move_logs();
 	void move_collected_to_root();
