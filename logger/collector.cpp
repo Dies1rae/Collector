@@ -154,6 +154,7 @@ void collector::move_collected_to_root() {
 }
 
 void collector::get_pc_disk_space() {
+	//disklist
 	std::vector<std::string> disklist;
 	DWORD drives = GetLogicalDrives();
 	for (int i = 0; i < 26; i++){
@@ -166,7 +167,7 @@ void collector::get_pc_disk_space() {
 			}
 		}
 	}
-
+	//diskspace
 	for (const std::string& D : disklist) {		
 		BOOL diskRes_;
 		unsigned __int64 i64FreeBytesToCaller, i64TotalBytes, i64FreeBytes;
@@ -178,6 +179,22 @@ void collector::get_pc_disk_space() {
 			this->main_log_container_->add_log_string(cv);
 		}
 	}
+	//disk_serial
+	const int VolumeSerialLength = 9; // 8 hex digits + zero termination
+	char VolumeSerial[VolumeSerialLength] = { 0 };
+	DWORD VolumeSerialNumber;
+
+	if (GetVolumeInformationA(NULL, NULL, NULL, &VolumeSerialNumber, NULL, NULL, NULL, NULL)) {
+		sprintf_s(VolumeSerial, VolumeSerialLength, "%08lX", VolumeSerialNumber);
+		std::string volume_serial_tmp = "Volume serial number: ";
+		volume_serial_tmp += VolumeSerial;
+		this->main_log_container_->add_log_string(volume_serial_tmp);
+	} else {
+		std::string volume_serial_tmp = "Get volume serial number error: ";
+		volume_serial_tmp += GetLastError();
+		this->main_log_container_->add_log_string(volume_serial_tmp);
+	}
+
 }
 
 std::string collector::get_pc_ram_info() {
