@@ -180,21 +180,14 @@ void collector::get_pc_disk_space() {
 		}
 	}
 	//disk_serial
-	const int VolumeSerialLength = 9; // 8 hex digits + zero termination
-	char VolumeSerial[VolumeSerialLength] = { 0 };
-	DWORD VolumeSerialNumber;
-
-	if (GetVolumeInformationA(NULL, NULL, NULL, &VolumeSerialNumber, NULL, NULL, NULL, NULL)) {
-		sprintf_s(VolumeSerial, VolumeSerialLength, "%08lX", VolumeSerialNumber);
-		std::string volume_serial_tmp = "Volume serial number: ";
-		volume_serial_tmp += VolumeSerial;
-		this->main_log_container_->add_log_string(volume_serial_tmp);
-	} else {
-		std::string volume_serial_tmp = "Get volume serial number error: ";
-		volume_serial_tmp += GetLastError();
-		this->main_log_container_->add_log_string(volume_serial_tmp);
-	}
-
+	WCHAR disk_mod[512];
+	DWORD Buff_ = 512;
+	RegGetValue(HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Services\\disk\\Enum", L"0", RRF_RT_ANY, NULL, disk_mod, &Buff_);
+	std::wstring dsk_mod_tmp(disk_mod);
+	std::string res_dsk_mod_tmp(dsk_mod_tmp.begin(), dsk_mod_tmp.end());
+	res_dsk_mod_tmp = res_dsk_mod_tmp.substr(res_dsk_mod_tmp.find_first_of("_")+1, res_dsk_mod_tmp.find_last_of("\\") - res_dsk_mod_tmp.find_first_of("_")+1);
+	res_dsk_mod_tmp.insert(0, "System drive model: ");
+	this->main_log_container_->add_log_string(res_dsk_mod_tmp);
 }
 
 std::string collector::get_pc_ram_info() {
