@@ -18,12 +18,11 @@
 #include <WinSock2.h>
 #include <lm.h>
 
-//#include <filesystem>
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib,"user32.lib")
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "netapi32.lib")
-//namespace fs = std::filesystem;
+
 
 void collector::init(logg* L,bool K) {
 	this->main_log_container_ = L;
@@ -71,6 +70,7 @@ void collector::run() {
 
 	if (this->key_) {
 		this->collect_log_file();
+		std::cout << "copy done" << std::endl;
 	}
 	this->main_log_container_->add_log_string("");
 	this->main_log_container_->add_log_string("");
@@ -428,18 +428,9 @@ std::vector<std::string> collector::get_pc_user_list_() {
 }
 
 void collector::collect_log_file(){
-	// need to rebuild it without c++ FILESYSTEM to stl14 format
-	/*
-	for (const auto& ptrD : place) {
-		for (const auto& ptrM : mask) {
-			for (const auto& ptrF : fs::recursive_directory_iterator(ptrD)) {
-				std::string tmpF = ptrF.path().string();
-				if (tmpF.find(ptrM) != std::string::npos) {
-					this->files_to_copy_in_root_.push_back(tmpF);
-				}
-				tmpF.clear();
-			}
-		}
+	for (const auto& folder : place) {
+		std::string cpy_cmd = "copy " + folder + " .\\logs\\";
+		_mkdir(".\\logs\\");
+		system(cpy_cmd.c_str());
 	}
-	*/
 }
