@@ -53,12 +53,12 @@ void man_menu_view() {
 void help_menu_view() {
 	cout << "	Usage: logger.exe" << endl << endl;
 	cout << "	OPTIONS: " << endl;
-	cout << "		a - key to copy all sys log - UUPSY this func. is not availible now" << endl;
+	cout << "		a - key to copy all sys log from %sysroot% folder" << endl;
 	cout << "		m - man menu" << endl;
 	cout << "		? - help menu" << endl << endl;
 	cout << "	EXAMPLES: " << endl;
 	cout << "		logger.exe" << endl;
-	cout << "		logger.exe /a - UUPSY this func. is not availible now" << endl;
+	cout << "		logger.exe /a" << endl;
 	cout << "		logger.exe /h" << endl;
 	cout << "		logger.exe /?" << endl;
 }
