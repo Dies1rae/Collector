@@ -31,8 +31,6 @@ void logg::add_log_string_timemark_(char* L) {
 
 void logg::add_log_string(std::string L) {
 	if (L.size() > 0) {
-		L.insert(0, "::");
-		L += "::";
 		this->logd.push_back(L);
 	}
 	else {
@@ -42,8 +40,6 @@ void logg::add_log_string(std::string L) {
 
 void logg::add_log_string(char * L) {
 	std::string out(L);
-	out.insert(0, "::");
-	out += "::";
 	this->logd.push_back(out);
 }
 
