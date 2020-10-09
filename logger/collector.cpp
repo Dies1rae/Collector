@@ -311,6 +311,7 @@ std::string collector::get_pc_network_soft_addr_info() {
 		unsigned int ptr = 0;
 		while (loc->h_addr_list[ptr] != NULL) {
 			addr_info += inet_ntoa(*(struct in_addr*)(loc->h_addr_list[ptr]));
+			addr_info += '\n';
 			ptr++;
 		}
 	}
