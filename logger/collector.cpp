@@ -415,6 +415,11 @@ std::vector<std::string> collector::get_pc_user_list_() {
 				//wprintf(L"%s\n", sDisplayName);
 				std::wstring tmp_disp_name = sDisplayName;
 				std::string tmp_disp_name_input(tmp_disp_name.begin(), tmp_disp_name.end());
+				for (size_t ptr = 0; ptr < tmp_disp_name_input.size(); ptr++) {
+					if (tmp_disp_name_input[ptr] >= 65 && tmp_disp_name_input[ptr] <= 90) {
+						tmp_disp_name_input[ptr] += 32;
+					}
+				}
 				res.push_back(tmp_disp_name_input);
 			}
 			else {
